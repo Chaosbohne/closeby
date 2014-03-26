@@ -1,1 +1,2 @@
+#lib/
 Content that is loaded first on client and server
