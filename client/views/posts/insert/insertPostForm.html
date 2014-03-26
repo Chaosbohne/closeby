@@ -1,0 +1,15 @@
+<template name="insertPostForm">
+  {{#autoForm validation="submit" schema=insertPostFormSchema id="insertPostForm" role="form"}} 
+    <div class="form-group{{#if afFieldIsInvalid 'content'}} has-error {{/if}}">
+      {{afFieldLabel "content"}}
+      {{afFieldInput "content" rows="4" autofocus=""}}
+      {{#if afFieldIsInvalid "content"}}
+      <span class="help-block">{{afFieldMessage "content"}}</span>
+      {{/if}}     
+    </div>          
+    <div class="form-group">
+      <button type="submit" data-meteor-method="insertPost" class="btn btn-default btn-info pull-right">Post</button>      
+      <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>              
+    </div>        
+  {{/autoForm}}    
+</template>

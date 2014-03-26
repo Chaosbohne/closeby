@@ -1,0 +1,15 @@
+<template name="userprofile">
+  <div id="userprofile">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+          <img class="profile_picture img-responsive" src="/img/profile_picture.jpg" alt="profile_picture">
+        </div>
+        <div class="col-lg-11 col-md-11 col-sm-10">
+          <p class="lead">{{name}}</p>
+          <a href="{{pathFor 'posts'}}">{{name}}</a>
+        </div>        
+      </div>
+    </div>
+  </div>
+</template>

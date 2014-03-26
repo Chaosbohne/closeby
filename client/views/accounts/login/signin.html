@@ -1,0 +1,22 @@
+<template name="signinForm">
+  {{#autoForm schema=signinForm id="signinForm" role="form"}} 
+    <div class="form-group{{#if afFieldIsInvalid 'email'}} has-error {{/if}}">
+      {{afFieldLabel "email"}}
+      {{afFieldInput "email"}}
+      {{#if afFieldIsInvalid "email"}}
+        <span class="help-block">{{afFieldMessage "email"}}</span>
+      {{/if}}   
+    </div>                      
+    <div class="form-group{{#if afFieldIsInvalid 'password'}} has-error {{/if}}">
+      {{afFieldLabel "password"}}
+      <input type="password" data-schema-key="password" name="password" value="" class="form-control" required="" maxlength="50">
+      {{#if afFieldIsInvalid "password"}}
+        <span class="help-block">{{afFieldMessage "password"}}</span>
+      {{/if}}   
+    </div> 
+    <div class="form-group">
+      <button type="submit" class="btn btn-block btn-info">Sign In</button>
+    </div>    
+  {{/autoForm}}  
+</template>
+                       

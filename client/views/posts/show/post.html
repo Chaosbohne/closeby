@@ -1,0 +1,30 @@
+<template name="post">
+  <li class="post list-unstyled">
+    <div class="row">
+      <div class="postHead">
+        <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+          <img class="profile_picture img-responsive" src="/img/profile_picture.jpg" alt="profile_picture">
+        </div>    
+        <div class="col-lg-11 col-md-11 col-sm-10 col-xs-10">
+          <div>
+            <span class="author">{{author}}</span><span class="submitted">{{timeMeasurement submitted}}</span>
+          </div>
+          <span class="content">{{content}}</span>
+          <div>
+            <span class="content">{{commentsCount}}Comments</span>
+          </div>
+        </div>
+      </div>
+      <div class="postDetail">
+        {{#if showPostDetail}}
+          <div class="col-lg-1 col-md-1 col-sm-2 col-xs-2">
+          </div>
+          <div class="col-lg-11 col-md-11 col-sm-10 col-xs-10">
+            {{> comments}}
+            {{> insertComment}}
+          </div>
+        {{/if}}
+      </div>
+    </div>
+  </li>
+</template>

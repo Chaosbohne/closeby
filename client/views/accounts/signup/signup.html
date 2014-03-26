@@ -1,0 +1,10 @@
+<template name="signupForm">
+  {{#autoForm validation="keyup" schema=signupForm id="signupForm" role="form"}} 
+  
+  <!-- Form is reactive but map should be isolated causes ugly templatedesign -->
+    {{> signupInput}}
+    {{> signupMap}}
+    {{> signupSubmit}}
+
+  {{/autoForm}}
+</template>
