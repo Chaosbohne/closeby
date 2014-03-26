@@ -1,1 +1,3 @@
-Alle the publicationsstuff
+#server/publications/
+
+Contains all publications.

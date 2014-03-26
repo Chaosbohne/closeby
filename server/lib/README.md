@@ -1,1 +1,2 @@
-content that is loaded first server-only 
+#server/lib/
+Contains all content that is loaded before meteor is executed on server side.

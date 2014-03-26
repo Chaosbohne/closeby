@@ -1,1 +1,3 @@
-Content that is loaded on Meteor.startup server-side
+#server/startup
+
+Contains everything that is loaded on meteor.startup

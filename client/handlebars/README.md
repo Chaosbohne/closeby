@@ -1,1 +1,2 @@
-folder that contains custom handlebars clientside only stuff
+#client/handlebars/
+Contains custom handlebars.

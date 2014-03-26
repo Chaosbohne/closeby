@@ -1,1 +1,2 @@
-folder that contains custom helpers/functions clientside only stuff
+#client/helpers
+Contains custom helpers/functions.

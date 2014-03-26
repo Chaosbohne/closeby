@@ -1,1 +1,2 @@
-All Meteor.methods
+#server/methods/
+Contains all methods.

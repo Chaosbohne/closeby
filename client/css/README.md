@@ -1,1 +1,2 @@
-folder that contains custom css stuff
+#client/css/
+Contains stylesheets.
