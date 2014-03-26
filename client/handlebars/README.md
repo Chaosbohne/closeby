@@ -1,0 +1,1 @@
+folder that contains custom handlebars clientside only stuff

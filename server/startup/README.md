@@ -1,0 +1,1 @@
+Content that is loaded on Meteor.startup server-side

@@ -1,0 +1,1 @@
+folder that contains schemas/definitions that should loaded at first

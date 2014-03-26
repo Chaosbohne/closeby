@@ -1,0 +1,1 @@
+Content that is loaded on meteor.startup
