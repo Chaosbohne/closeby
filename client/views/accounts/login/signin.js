@@ -1,4 +1,4 @@
-var signinForm;
+/*var signinForm;
 Template.signinForm.created = function() {
   signinForm = new AutoForm(SigninSchema);
   
@@ -22,9 +22,9 @@ Template.signinForm.created = function() {
   
 };
 
-
+*/
 Template.signinForm.helpers({
   signinForm: function() {
-    return signinForm;
+    return SigninSchema;
   }
 });

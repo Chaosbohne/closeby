@@ -1,15 +1,45 @@
 <template name="insertPostForm">
-  {{#autoForm validation="submit" schema=insertPostFormSchema id="insertPostForm" role="form"}} 
-    <div class="form-group{{#if afFieldIsInvalid 'content'}} has-error {{/if}}">
-      {{afFieldLabel "content"}}
-      {{afFieldInput "content" rows="4" autofocus=""}}
-      {{#if afFieldIsInvalid "content"}}
-      <span class="help-block">{{afFieldMessage "content"}}</span>
-      {{/if}}     
-    </div>          
-    <div class="form-group">
-      <button type="submit" data-meteor-method="insertPost" class="btn btn-default btn-info pull-right">Post</button>      
-      <button type="button" class="btn btn-default pull-right" data-dismiss="modal">Close</button>              
-    </div>        
+  <div id="insertPostForm" class="container-fluid">
+  {{#autoForm validation="submit" type="method" meteormethod="insertPost" schema=insertPostFormSchema id="insertPostForm" role="form"}} 
+    <div id="dropzone" class="dropzone row">
+      <div class="form-group {{#if afFieldIsInvalid name='content'}} has-error {{/if}}">
+        {{> afFieldInput name="content" rows="4" autofocus=""}}
+        {{#if afFieldIsInvalid name="content"}}
+        <span class="help-block">{{afFieldMessage name="content"}}</span>
+        {{/if}}     
+      </div>     
+    </div>
+  
+    {{#if hasImageValidationError}}
+    <div class="validation-errors row">
+      <div class="alert alert-warning alert-dismissable text-center">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong>Oh snap!</strong> Just images ( png, jpg ) less than 3 MB allowed!
+      </div>
+    </div>
+    {{/if}}
+    
+
+    <div class="thumbnail-container row">
+      <div id="thumbnail-preview" class="col-sm-2 col-xs-2 col-md-2">
+        <div id="thumbnail-preview-wrap" class="thumbnail">
+          
+        </div>
+      </div>
+    </div>
+    
+    <input id="addImage" accept="image/*" type="file">
+    
+    <div class="formControls row">
+      {{#if hasPostImage}}
+      {{else}}
+      <button class="btn btn-default btn-info pull-left btn-file">
+        Add Image<input id="addImage" accept="image/*" type="file">
+      </button>
+      {{/if}}
+        <button type="submit" class="btn btn-default btn-info pull-right">Post</button>
+    </div>
+  
   {{/autoForm}}    
+  </div>
 </template>

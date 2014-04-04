@@ -11,4 +11,7 @@ Meteor.startup(function() {
   });  
   
   
+  /* Session variables for posting */
+  Session.set('selectedUploadImageId', null);
+  Session.set('hasImageValidationError', false);
 });

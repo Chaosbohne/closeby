@@ -1,7 +1,16 @@
 {
   "packages": {
     "iron-router": {},
-    "autoform": {},
-    "collection2": {}
+    "autoform": {
+      "branch": "ui",
+      "git": "https://github.com/aldeed/meteor-autoform.git"
+    },
+    "collection2": {},
+    "collectionFS": {},
+    "cfs-s3": {},
+    "cfs-filesystem": {},
+    "cfs-graphicsmagick": {},
+    "bootstrap3-less": {},
+    "ui-dropped-event": {}
   }
 }

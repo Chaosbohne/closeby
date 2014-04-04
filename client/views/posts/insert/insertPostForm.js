@@ -1,59 +1,128 @@
-
-/* var insertPostForm  that is used for Autoform */
-var insertPostForm;
-
-Template.insertPostForm.created = function() {
-  
-  /* creating a new Autoform */
-  insertPostFormSchema = new AutoForm(PostSchema);
-  
-  /*
-  before:
-    new post is inserted google maps latLng have to be inserted
-    where the user clicked on map
-    
-  after:
-    model is hidden
-    
-  onError:
-    make a small console.log (should never occur)
-  */
-  insertPostFormSchema.hooks({
-    before: {
-      insert: function(doc) {
-        var locs = Session.get('mapClickedEvent');
-        if(!locs) return false;
-        
-        _.extend(doc, locs);
-        return doc;        
-      },
-      'insertPost': function(doc) {
-        var locs = Session.get('mapClickedEvent');
-        if(!locs) return false;
-        
-        _.extend(doc, locs);
-        return doc;        
-      }
-    },
-    
-    after: {
-      'insertPost': function() {
-         $('#createPostModal').modal('hide');
-      }
-    },
-    onError: function(operation, error, template) {
-      console.log('ERROR');
-      console.log(operation);
-      console.log(error);
-      console.log(template);
-    }    
-    
-  });    
-}
-
 /* Push autoform to our html template */
 Template.insertPostForm.helpers({
+  
+  /* if post has an image return true, else false */
+  hasPostImage: function() {
+    return Session.get('selectedUploadImageId');
+  },
+  
+  /* returning schema for collection2 */
   insertPostFormSchema: function() {
-    return insertPostFormSchema;
+    return PostSchema;
+  },
+  
+  /* if true there are validation errors */
+  hasImageValidationError: function() {
+    return Session.get('hasImageValidationError');
+  }
+  
+});
+
+/*
+Preview, upload and add image to post.
+*/
+
+function addImage(event) {
+  // Grap files
+  // Attention, just one file is allowed per post!
+  var files = event.target.files;
+ 
+  //Go throw each file, but return after first file is parsed
+  FS.Utility.eachFile(event, function(file) {
+    
+    //new fsFile
+    var fsFile = new FS.File(file);
+    //setMetadata, that is validated in collection
+    //just own user can update/remove fsFile
+    fsFile.metadata = {owner: Meteor.userId()};
+    
+    //Insert post into collection
+    PostImages.insert(fsFile, function (err, fileObj) {
+      //Filter options failed -> error
+      if(err) {
+        Session.set('hasImageValidationError', true);
+        return;
+      }
+      
+      //Filter options passed -> generate preview image
+      var reader = new FileReader();
+      
+      // Closure to capture the file information.
+      reader.onload = (function(theFile) {
+        return function(e) {
+          // Render thumbnail.
+          var span = document.createElement('span');
+          span.innerHTML = ['<button class="delete-thumbnail close">&times;</button><img class="thumb img-responsive" src="', e.target.result,
+                            '" title="', escape(theFile.name), '"/>'].join('');         
+          document.getElementById('thumbnail-preview-wrap').insertBefore(span, null);       
+        };
+      })(file);
+      
+      // Read in the image file as a data URL.
+      reader.readAsDataURL(file);        
+      // Set imageId
+      Session.set('selectedUploadImageId', fileObj._id); 
+    });   
+    
+    // Return after first file, because just one file per post allowed.
+    return;
+  });  
+}
+
+Template.insertPostForm.events({  
+  /*
+  If image is dropped in dropzone, add image to post.
+  */
+  'dropped #dropzone': function(event, template) {
+    addImage(event);
+  },
+
+  /*
+  If image is inserted via button, add image to post.
+  */  
+  'change #addImage': function(event, template) {
+    addImage(event);
+  },
+
+  /*
+  If image is deleted, delete image from database.
+  */  
+  'click .delete-thumbnail': function(event, template) {
+    if(Session.get('selectedUploadImageId')) {
+      console.log(Session.get('selectedUploadImageId'));
+      
+      Meteor.call('deleteImagePost', Session.get('selectedUploadImageId'), function(isDeleted) {
+        if(isDeleted){
+          console.log('isDeleted');
+          $('#thumbnail-preview-wrap').html('');
+          Session.set('selectedUploadImageId', null); 
+        }else {
+          console.log('isnotDeleted');
+        }
+      });
+    }
+    
+    event.preventDefault();
+    
+    /*
+    Delete image from postImage-Collection.
+    If still in uploadprogress there are some nasty error messages in console.
+    But functionality persists.
+    */
+    
+    //if(Session.get('selectedUploadImageId'))
+    //  PostImages.remove(Session.get('selectedUploadImageId'));
+    
+    /*
+    Reset Sessionhelpers. There is no selectedImage, because it was deleted.
+    */
+    
+    //Session.set('selectedUploadImageId', null); 
+    
+    /*
+    Clear image preview.
+    */
+    
+    //$('#thumbnail-preview-wrap').html('');
   }
 });

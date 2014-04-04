@@ -4,10 +4,16 @@
 # but you can also edit it by hand.
 
 standard-app-packages
-preserve-inputs
 iron-router
 collection2
 autoform
 accounts-base
 accounts-password
 disable-oplog
+collectionFS
+cfs-s3
+cfs-filesystem
+cfs-graphicsmagick
+less
+bootstrap3-less
+ui-dropped-event

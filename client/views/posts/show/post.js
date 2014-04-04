@@ -1,6 +1,11 @@
 Template.post.helpers({
   showPostDetail: function() {
     return this._id === Session.get('showPostDetail');
+  },
+  fileObj: function() {
+    var image = PostImages.findOne({_id : this.imageId});
+    console.log(image);
+    return image;
   }
 });
 
