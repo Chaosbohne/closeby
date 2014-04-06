@@ -12,16 +12,3 @@ Router.map(function() {
     path: '/login'
   });
 });
-
-
-Router.map(function() {
-  this.route('edit', {
-    path: '/edit/:_id',
-    
-    layoutTemplate: 'postLayout',
-    
-    waitOn: function() {
-      return Meteor.subscribe('profileimages');      
-    }
-  });
-});
