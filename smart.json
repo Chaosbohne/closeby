@@ -11,6 +11,7 @@
     "cfs-filesystem": {},
     "cfs-graphicsmagick": {},
     "bootstrap3-less": {},
-    "ui-dropped-event": {}
+    "ui-dropped-event": {},
+    "iron-router-progress": {}
   }
 }

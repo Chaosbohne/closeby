@@ -4,14 +4,13 @@ Template.post.helpers({
   },
   fileObj: function() {
     var image = PostImages.findOne({_id : this.imageId});
-    console.log(image);
     return image;
   }
 });
 
 Template.post.events({
-  'mouseenter li' : function(event) {
-   
+  'mouseenter .post' : function(event) {
+
     var latLng = new google.maps.LatLng(this.locs.lat, this.locs.lng);
     
     var marker = new google.maps.Marker({
@@ -23,13 +22,11 @@ Template.post.events({
     
   },
   
-  'mouseleave li' : function(event){
+  'mouseleave .post' : function(event){
     map.clearMarkers();
   },
   
   'click .postHead' : function(event) {
-    console.log(this._id);
     Session.set('showPostDetail', this._id);
-    
   }
 });

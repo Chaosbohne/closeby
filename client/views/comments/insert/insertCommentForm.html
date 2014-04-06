@@ -1,14 +1,15 @@
 <template name="insertCommentForm">
-  {{#autoForm validation="submit" schema=insertCommentFormSchema id="insertCommentForm" role="form"}} 
-    <div class="form-group{{#if afFieldIsInvalid 'content'}} has-error {{/if}}">
-      {{afFieldLabel "content"}}
-      {{afFieldInput "content" rows="1" autofocus=""}}
-      {{#if afFieldIsInvalid "content"}}
-      <span class="help-block">{{afFieldMessage "content"}}</span>
+  {{#autoForm validation="submit" type="method" meteormethod="insertComment"  schema=insertCommentFormSchema id="insertCommentForm" role="form"}} 
+    <div class="form-group{{#if afFieldIsInvalid name='content'}} has-error {{/if}}">
+      {{> afFieldLabel name="content"}}
+      {{> afFieldInput name="content" rows="1" autofocus=""}}
+      {{#if afFieldIsInvalid name="content"}}
+      <span class="help-block">{{afFieldMessage name="content"}}</span>
       {{/if}}     
+      {{> afFieldInput name="postId" type="hidden" value=postId }}
     </div>          
     <div class="form-group">
-      <button type="submit" data-meteor-method="insertComment" class="btn btn-default btn-info pull-right">Comment</button>      
+      <button type="submit" class="btn btn-default btn-info pull-right">Comment</button>      
     </div>        
   {{/autoForm}}      
 </template>

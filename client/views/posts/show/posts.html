@@ -1,7 +1,20 @@
+<template name="userposts">
+  {{> postsContent}}
+</template>
+
 <template name="posts">
-  <ul class="posts">
-    {{#each posts}}
-      {{> post}}
-    {{/each}}
-  </ul>
+  {{> postsContent}}
+</template>
+
+<template name="postsContent">
+  <div id="posts">
+    <ul class="posts">
+      {{#each posts}}
+        {{> post}}
+      {{/each}}
+    </ul>
+  {{#if nextPath}}
+    <a class="load-more" href="{{nextPath}}">Load more</a>
+  {{/if}}    
+  </div>  
 </template>

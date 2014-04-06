@@ -3,7 +3,7 @@
   {{#autoForm validation="submit" type="method" meteormethod="insertPost" schema=insertPostFormSchema id="insertPostForm" role="form"}} 
     <div id="dropzone" class="dropzone row">
       <div class="form-group {{#if afFieldIsInvalid name='content'}} has-error {{/if}}">
-        {{> afFieldInput name="content" rows="4" autofocus=""}}
+        {{> afFieldInput name="content" rows="4" autofocus="autofocus"}}
         {{#if afFieldIsInvalid name="content"}}
         <span class="help-block">{{afFieldMessage name="content"}}</span>
         {{/if}}     
@@ -21,17 +21,16 @@
     
 
     <div class="thumbnail-container row">
-      <div id="thumbnail-preview" class="col-sm-2 col-xs-2 col-md-2">
+      <div id="thumbnail-preview" class=" col-md-3 col-sm-3 col-xs-3">
         <div id="thumbnail-preview-wrap" class="thumbnail">
           
         </div>
       </div>
     </div>
     
-    <input id="addImage" accept="image/*" type="file">
-    
     <div class="formControls row">
       {{#if hasPostImage}}
+      <button id="removeImage" class="btn btn-default btn-info pull-left btn-file">Remove Image</button>
       {{else}}
       <button class="btn btn-default btn-info pull-left btn-file">
         Add Image<input id="addImage" accept="image/*" type="file">

@@ -3,9 +3,9 @@ var postImagesStore = new FS.Store.S3("postImages", {
   bucket: "closebypostimages", //required
   //ACL: myValue //optional, default is 'private'
   //beforeSave: myBeforeSaveFunction, //optional
-  //maxTries: 1 //optional, default 5
+  maxTries: 1, //optional, default 5
   transformWrite: function(fileObj, readStream, writeStream) {
-    this.gm(readStream, fileObj.name).strip().resize('1024').interlace("plane").blur('0.05').quality('80').stream().pipe(writeStream);
+    gm(readStream, fileObj.name).strip().resize('1024').interlace("plane").blur('0.05').quality('80').stream().pipe(writeStream);
     
     /*
     if (typeof fileObj.name === "string") {

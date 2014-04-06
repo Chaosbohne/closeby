@@ -61,12 +61,32 @@ function addImage(event) {
       // Read in the image file as a data URL.
       reader.readAsDataURL(file);        
       // Set imageId
+      console.log(fsFile);
+      
       Session.set('selectedUploadImageId', fileObj._id); 
     });   
     
     // Return after first file, because just one file per post allowed.
     return;
   });  
+}
+
+function removeImage(event) {
+  if(Session.get('selectedUploadImageId')) {
+    console.log(Session.get('selectedUploadImageId'));
+    //PostImages.remove(Session.get('selectedUploadImageId'));
+    Meteor.call('deleteImagePost', Session.get('selectedUploadImageId'), function(error, isDeleted) {
+      if(isDeleted){
+        console.log('isDeleted');
+        $('#thumbnail-preview-wrap').html('');
+        Session.set('selectedUploadImageId', null); 
+      }else {
+        console.log('isnotDeleted');
+      }
+    });
+  }
+  
+  event.preventDefault();  
 }
 
 Template.insertPostForm.events({  
@@ -86,43 +106,15 @@ Template.insertPostForm.events({
 
   /*
   If image is deleted, delete image from database.
+  */
+  'click #removeImage': function(event, template) {
+    removeImage(event);
+  },
+  
+  /*
+  If image is deleted, delete image from database.
   */  
   'click .delete-thumbnail': function(event, template) {
-    if(Session.get('selectedUploadImageId')) {
-      console.log(Session.get('selectedUploadImageId'));
-      
-      Meteor.call('deleteImagePost', Session.get('selectedUploadImageId'), function(isDeleted) {
-        if(isDeleted){
-          console.log('isDeleted');
-          $('#thumbnail-preview-wrap').html('');
-          Session.set('selectedUploadImageId', null); 
-        }else {
-          console.log('isnotDeleted');
-        }
-      });
-    }
-    
-    event.preventDefault();
-    
-    /*
-    Delete image from postImage-Collection.
-    If still in uploadprogress there are some nasty error messages in console.
-    But functionality persists.
-    */
-    
-    //if(Session.get('selectedUploadImageId'))
-    //  PostImages.remove(Session.get('selectedUploadImageId'));
-    
-    /*
-    Reset Sessionhelpers. There is no selectedImage, because it was deleted.
-    */
-    
-    //Session.set('selectedUploadImageId', null); 
-    
-    /*
-    Clear image preview.
-    */
-    
-    //$('#thumbnail-preview-wrap').html('');
+    removeImage(event);
   }
 });
