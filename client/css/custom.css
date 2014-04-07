@@ -64,3 +64,18 @@ Styling button for input type-file
     cursor: inherit;
     display: block;
 }
+
+
+
+/* 
+Custom-Css for gmaps
+Using affix from bootstrap
+*/
+
+
+
+
+.affix,.affix-top {
+   position:static;
+}
+

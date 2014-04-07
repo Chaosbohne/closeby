@@ -3,6 +3,5 @@ Meteor.publish('allPostImages', function() {
 });
 
 Meteor.publish('postImages', function(imageIds) {
-  console.log(imageIds);
   return PostImages.find({ _id : {$in: imageIds}})
 });

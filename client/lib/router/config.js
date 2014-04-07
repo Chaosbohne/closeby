@@ -4,8 +4,7 @@ Router.configure({
 });
 
 Router.onBeforeAction(beforeHooks.isLoggedIn, {except: ['landingPage']});
-Router.onBeforeAction(beforeHooks.resetPostsLimit, {only: ['posts']});
-//Router.before(beforeHooks.isLoggedIn, {only: ['posts']});
+//Router.onBeforeAction(beforeHooks.resetPostsLimit, {only: ['posts', 'userposts']});
 
 Router.map(function() {
   this.route('landingPage', {

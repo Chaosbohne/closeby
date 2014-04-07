@@ -47,12 +47,14 @@
   <div class="fill"> 
     <div class="container">
       <div class="row">
-        <div class="col-sm-4">   
-          {{#if currentUser}}
-            {{> gmap}}
-          {{/if}}
-        </div>
-        <div class="col-sm-8">    
+        <div class="col-sm-4 col-md-4">             
+          <div id="sidebar">
+            {{#if currentUser}}
+              {{> gmap}}
+            {{/if}}
+          </div>
+        </div> 
+        <div class="col-sm-8 col-md-8">    
           <div class="row">
             {{> yield}}
           </div>

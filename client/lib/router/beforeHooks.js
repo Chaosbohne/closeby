@@ -4,14 +4,5 @@ beforeHooks =  {
       Router.go('landingPage');
       this.stop();
     }
-  },
-  
-  resetPostsLimit: function() {
-    console.log(this);
-    
-    if(this.isFirstRun) {
-      console.log('FIRSTRUN');
-    }
-    console.log('NO FIRSTRUN');
   }
 }

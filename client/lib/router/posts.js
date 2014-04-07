@@ -14,9 +14,11 @@ PostsListController = RouteController.extend({
     var user = Meteor.user();
     if(user) {     
       if(this.isFirstRun)
-        return [Meteor.subscribe('posts', user.profile.locs[0].lat, user.profile.locs[0].lng, user.profile.locs[1].lat, user.profile.locs[1].lng, this.findOptions())];
+        return [Meteor.subscribe('posts', user.profile.locs[0].lat, user.profile.locs[0].lng, user.profile.locs[1].lat, user.profile.locs[1].lng, this.findOptions()),
+               Meteor.subscribe('allPostImages')];
       else
-        return [Meteor.subscribe('posts', user.profile.discoverLocs[0].lat, user.profile.discoverLocs[0].lng, user.profile.discoverLocs[1].lat, user.profile.discoverLocs[1].lng, this.findOptions())];
+        return [Meteor.subscribe('posts', user.profile.discoverLocs[0].lat, user.profile.discoverLocs[0].lng, user.profile.discoverLocs[1].lat, user.profile.discoverLocs[1].lng, this.findOptions()),
+               Meteor.subscribe('allPostImages')];
     }
   },
   

@@ -63,6 +63,7 @@ PostImages.allow({
     This is a lot of logic, so its outsorted in a Meteor.call
     */
     //return (userId === doc.metadata.owner);
+    //return false;
     return false;
   },
   download: function(userId) {

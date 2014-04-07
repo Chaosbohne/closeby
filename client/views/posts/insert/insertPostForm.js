@@ -61,8 +61,6 @@ function addImage(event) {
       // Read in the image file as a data URL.
       reader.readAsDataURL(file);        
       // Set imageId
-      console.log(fsFile);
-      
       Session.set('selectedUploadImageId', fileObj._id); 
     });   
     
@@ -71,22 +69,33 @@ function addImage(event) {
   });  
 }
 
+resetFileOptions = function () {
+  $('#thumbnail-preview-wrap').html('');
+  Session.set('selectedUploadImageId', null);   
+}
+
 function removeImage(event) {
-  if(Session.get('selectedUploadImageId')) {
-    console.log(Session.get('selectedUploadImageId'));
-    //PostImages.remove(Session.get('selectedUploadImageId'));
-    Meteor.call('deleteImagePost', Session.get('selectedUploadImageId'), function(error, isDeleted) {
-      if(isDeleted){
-        console.log('isDeleted');
-        $('#thumbnail-preview-wrap').html('');
-        Session.set('selectedUploadImageId', null); 
-      }else {
-        console.log('isnotDeleted');
-      }
-    });
-  }
+  event.preventDefault();    
   
-  event.preventDefault();  
+  if(Session.get('selectedUploadImageId')) {
+    var fileObj = PostImages.findOne({_id : Session.get('selectedUploadImageId')});
+
+    FS.HTTP.uploadQueue.pause();
+    
+    if(FS.HTTP.uploadQueue.isUploadingFile(fileObj)){
+      FS.HTTP.uploadQueue.cancel(fileObj);
+      resetFileOptions();
+    }else {
+      FS.HTTP.uploadQueue.cancel(fileObj);
+      Meteor.call('deleteImagePost', Session.get('selectedUploadImageId'), function(error, isDeleted) {
+        if(isDeleted){
+          resetFileOptions();
+        }else {
+          console.log('isnotDeleted');
+        }
+      });
+    }
+  }
 }
 
 Template.insertPostForm.events({  

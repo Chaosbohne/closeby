@@ -24,9 +24,7 @@ AutoForm.hooks({
         var imageId = Session.get('selectedUploadImageId');
         if(imageId)
           _.extend(doc, {imageId : imageId});
-        
-        console.log(doc);
-        
+
         return doc;        
       }
     },
@@ -34,6 +32,7 @@ AutoForm.hooks({
     after: {
       'insertPost': function() {
         $('#createPostModal').modal('hide');
+        resetFileOptions();
       }
     },
     onError: function(operation, error, template) {
