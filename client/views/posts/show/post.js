@@ -5,6 +5,12 @@ Template.post.helpers({
   fileObj: function() {
     var image = PostImages.findOne({_id : this.imageId});
     return image;
+  },
+  userObject: function() {
+    return {
+      _id : this.userId,
+      author : this.author
+    }
   }
 });
 

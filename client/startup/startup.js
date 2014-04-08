@@ -19,4 +19,5 @@ Meteor.startup(function() {
     $('#thumbnail-preview-wrap').html('');
     Session.set('selectedUploadImageId', null);   
   }  
+  
 });

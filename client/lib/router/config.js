@@ -11,3 +11,23 @@ Router.map(function() {
     path: '/login'
   });
 });
+
+Router.map(function() {
+  this.route('userposts', {
+    path: '/:_id/:postsLimit?',
+    
+    layoutTemplate: 'postLayout',
+    
+    controller: UserPostsListController
+  });
+});
+
+Router.map(function() {
+  this.route('posts', {
+    path: '/:postsLimit?',
+    
+    layoutTemplate: 'postLayout',
+    
+    controller: PostsListController
+  });
+});

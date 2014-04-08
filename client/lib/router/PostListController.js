@@ -1,5 +1,5 @@
-UserPostsListController = RouteController.extend({
-  
+PostsListController = RouteController.extend({
+    
   increment: 5,
   
   limit: function() {
@@ -11,17 +11,25 @@ UserPostsListController = RouteController.extend({
   },
   
   waitOn: function() {
-    return Meteor.subscribe('postsByUser', this.params._id, this.findOptions());
+    var user = Meteor.user();
+    if(user) {     
+      if(this.isFirstRun)
+        return [Meteor.subscribe('posts', user.profile.locs[0].lat, user.profile.locs[0].lng, user.profile.locs[1].lat, user.profile.locs[1].lng, this.findOptions()),
+               Meteor.subscribe('allPostImages')];
+      else
+        return [Meteor.subscribe('posts', user.profile.discoverLocs[0].lat, user.profile.discoverLocs[0].lng, user.profile.discoverLocs[1].lat, user.profile.discoverLocs[1].lng, this.findOptions()),
+               Meteor.subscribe('allPostImages')];
+    }
   },
   
   posts: function() {
-    return Posts.find({userId : this.params._id}, this.findOptions());
+    return Posts.find({}, this.findOptions());
   },
   
   data: function() { 
     var hasMore = this.posts().count() === this.limit();
-    var nextPath = this.route.path({_id : this.params._id, postsLimit: this.limit() + this.increment});
-
+    var nextPath = this.route.path({postsLimit: this.limit() + this.increment});
+    
     return {
       posts : this.posts(),
       nextPath: hasMore ? nextPath : null
@@ -40,12 +48,3 @@ UserPostsListController = RouteController.extend({
   }  
 });
 
-Router.map(function() {
-  this.route('userposts', {
-    path: '/user/:_id/:postsLimit?',
-    
-    layoutTemplate: 'postLayout',
-    
-    controller: UserPostsListController
-  });
-});
