@@ -1,5 +1,5 @@
 PostsListController = RouteController.extend({
-  
+    
   increment: 5,
   
   limit: function() {
@@ -29,10 +29,12 @@ PostsListController = RouteController.extend({
   data: function() { 
     var hasMore = this.posts().count() === this.limit();
     var nextPath = this.route.path({postsLimit: this.limit() + this.increment});
+    var nextPathLess = this.route.path({postsLimit: this.increment});
     
     return {
       posts : this.posts(),
-      nextPath: hasMore ? nextPath : null
+      nextPath: hasMore ? nextPath : null,
+      nextPathLess: nextPathLess
     };
   },
   

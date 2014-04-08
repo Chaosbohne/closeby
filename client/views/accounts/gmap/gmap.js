@@ -2,9 +2,14 @@ Template.gmap.rendered = function() {
   
   $('#sidebar').affix({
     offset: {
-      top: $('header').height()
+      top: $('header').height(),
+      bottom: $('footer').height()
     }
   });    
+
+  $('#sidebar').on('affix-bottom.bs.affix', function() {
+    console.log('AFFIX TO BOTTOM');
+  });
   
   if(Session.get('isMap'))
     return;  
@@ -47,14 +52,14 @@ Template.gmap.rendered = function() {
   
   /* Rezising map on window-size change */
   
-  /*
+  
     function resizer() {
       $('#map-canvas').height($('#map-canvas').width());
     };  
     
     $(window).resize(resizer);  
     $('#map-canvas').height($('#map-canvas').width());
-    */
+    
   
   /* Add advanced properties to GMAPS-Object, to handle markers */ 
   google.maps.Map.prototype.markers = new Array();
