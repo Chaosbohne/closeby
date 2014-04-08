@@ -6,10 +6,6 @@ Template.gmap.rendered = function() {
       bottom: $('footer').height()
     }
   });    
-
-  $('#sidebar').on('affix-bottom.bs.affix', function() {
-    console.log('AFFIX TO BOTTOM');
-  });
   
   if(Session.get('isMap'))
     return;  

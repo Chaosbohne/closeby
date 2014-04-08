@@ -1,5 +1,4 @@
-Handlebars.registerHelper('timeMeasurement', function(time) {
-  
+UI.registerHelper('timeMeasurement', function(time) {
   var diff = ((new Date).getTime() - time) / 60 / 1000;
   
   if(diff <= 60) {

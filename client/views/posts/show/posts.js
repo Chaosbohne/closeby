@@ -5,6 +5,10 @@ Sometimes it is still a bit buggy,
 but i can live with that for now.
 Because clickable button always shows correct results
 just the autopreload sometimes fail
+
+Why using throttle
+http://ejohn.org/blog/learning-from-twitter/
+
 */
 Template.postsContent.rendered = function() {
   var that = this;
