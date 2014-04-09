@@ -15,6 +15,7 @@ Template.post.helpers({
 });
 
 Template.post.events({
+  
   'mouseenter .post' : function(event) {
 
     var latLng = new google.maps.LatLng(this.locs.lat, this.locs.lng);

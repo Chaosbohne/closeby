@@ -15,10 +15,11 @@
   
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>  
   
-  <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    
   <script type="text/javascript" src="https://jqueryjs.googlecode.com/svn-history/r6305/trunk/plugins/methods/date.js"></script>
-
+  
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+  
+  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>    
 </head>
 
 
@@ -36,7 +37,21 @@
 </template>
 
 <template name="postLayout">
-  <header role="banner">
+  <header role="banner">   
+    
+  <div class="btn-group">
+    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+      Action <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+      <li><a href="#">Action</a></li>
+      <li><a href="#">Another action</a></li>
+      <li><a href="#">Something else here</a></li>
+      <li class="divider"></li>
+      <li><a href="#">Separated link</a></li>
+    </ul>
+  </div> 
+    
     {{#with currentUser}}
       {{> userprofile}}
       {{> navbar}}
