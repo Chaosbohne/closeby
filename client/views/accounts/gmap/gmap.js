@@ -7,13 +7,10 @@ Template.gmap.rendered = function() {
     }
   });    
   
-  if(Session.get('isMap'))
-    return;  
-  
   var sw = new google.maps.LatLng(-34.89410255169253, 150.039751953125);
   var ne = new google.maps.LatLng(-33.89692705065752, 151.248248046875);
   
-  var bounds;
+  var bounds; 
   
   var user = Meteor.user();
   
@@ -21,7 +18,7 @@ Template.gmap.rendered = function() {
     sw = new google.maps.LatLng(user.profile.locs[0].lat, user.profile.locs[0].lng);
     ne = new google.maps.LatLng(user.profile.locs[1].lat, user.profile.locs[1].lng);  
   }
-  
+
   bounds = new google.maps.LatLngBounds(sw, ne);
   
   var myStyles =[
@@ -45,42 +42,12 @@ Template.gmap.rendered = function() {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     styles: myStyles
   };
-  
-  /* Rezising map on window-size change */
-  
-  
-    function resizer() {
-      $('#map-canvas').height($('#map-canvas').width());
-    };  
-    
-    $(window).resize(resizer);  
-    $('#map-canvas').height($('#map-canvas').width());
-    
-  
-  /* Add advanced properties to GMAPS-Object, to handle markers */ 
-  google.maps.Map.prototype.markers = new Array();
-  
-  google.maps.Map.prototype.addMarker = function(marker) {
-    this.markers[this.markers.length] = marker;
-  };
-  
-  google.maps.Map.prototype.getMarkers = function() {
-    return this.markers
-  };
-  
-  google.maps.Map.prototype.clearMarkers = function() {
-    for(var i=0; i<this.markers.length; i++){
-      this.markers[i].setMap(null);
-    }
-    this.markers = new Array();
-  };  
-  
+
   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);   
   
   map.fitBounds(bounds);
   
   function setDiscoverLocs() {
-    
     if(map) {
       var sw = map.getBounds().getSouthWest();
       var ne = map.getBounds().getNorthEast();
@@ -92,7 +59,6 @@ Template.gmap.rendered = function() {
       
       Meteor.call('setDiscoverLocs', discoverLocs);
     }
-    
   }  
   
   function openCreatePostModal(event) {
@@ -107,9 +73,6 @@ Template.gmap.rendered = function() {
     google.maps.event.addListener(map, "idle", setDiscoverLocs);     
     google.maps.event.addListener(map, "click", openCreatePostModal);   
   }
-  
-  Session.set('isMap', true);    
-  
   //    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
   //var input = (document.getElementById('pac-input'));
   //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -124,14 +87,4 @@ Template.gmap.rendered = function() {
   //});  
   // :)    
   //}
-};
-
-Template.gmap.created = function() {
-  Session.set('isMap', false);
-}
-
-Template.gmap.destroyed = function() {
-  Session.set('isMap', false);
-
-  //s$(window).off("resize", resizer);
 };

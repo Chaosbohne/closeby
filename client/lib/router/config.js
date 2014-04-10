@@ -16,13 +16,13 @@ Router.map(function() {
   this.route('settings', {
     path: '/settings',
     
-    layoutTemplate: 'postLayout'
+    layoutTemplate: 'noPostLayout'
   });
 });
 
 Router.map(function() {
   this.route('userposts', {
-    path: '/:_id/:postsLimit?',
+    path: '/user/:_id/:postsLimit?',
     
     layoutTemplate: 'postLayout',
     

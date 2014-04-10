@@ -1,6 +1,6 @@
 PostsListController = RouteController.extend({
     
-  increment: 5,
+  increment: 10,
   
   limit: function() {
     return parseInt(this.params.postsLimit) || this.increment;
@@ -13,12 +13,13 @@ PostsListController = RouteController.extend({
   waitOn: function() {
     var user = Meteor.user();
     if(user) {     
-      if(this.isFirstRun)
+      if(this.isFirstRun) {
         return [Meteor.subscribe('posts', user.profile.locs[0].lat, user.profile.locs[0].lng, user.profile.locs[1].lat, user.profile.locs[1].lng, this.findOptions()),
                Meteor.subscribe('allPostImages')];
-      else
+      }else{
         return [Meteor.subscribe('posts', user.profile.discoverLocs[0].lat, user.profile.discoverLocs[0].lng, user.profile.discoverLocs[1].lat, user.profile.discoverLocs[1].lng, this.findOptions()),
                Meteor.subscribe('allPostImages')];
+      }
     }
   },
   

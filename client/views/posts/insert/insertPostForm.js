@@ -69,11 +69,6 @@ function addImage(event) {
   });  
 }
 
-resetFileOptions = function () {
-  $('#thumbnail-preview-wrap').html('');
-  Session.set('selectedUploadImageId', null);   
-}
-
 function removeImage(event) {
   event.preventDefault();    
   

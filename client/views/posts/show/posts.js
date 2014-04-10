@@ -36,7 +36,8 @@ Template.userposts.rendered = function() {
     if($(window).scrollTop() + $(window).height() > $(document).height() - 400 - $('footer').height()) {
       var path = $('a[href].load-more')[0];
       if(path) {
-        Router.go('userposts', {_id : path.pathname});
+        var splittedPath = path.pathname.split('/', 4);   
+        Router.go('userposts', {_id : splittedPath[2], postsLimit : splittedPath[3]});
       }
     }
   }

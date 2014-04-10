@@ -1,6 +1,6 @@
 UserPostsListController = RouteController.extend({
   
-  increment: 5,
+  increment: 10,
   
   limit: function() {
     return parseInt(this.params.postsLimit) || this.increment;
