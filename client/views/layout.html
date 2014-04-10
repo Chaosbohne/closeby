@@ -12,14 +12,10 @@
 
   <!-- Add custom CSS here -->
   <link href="/css/landing-page.css" rel="stylesheet">
-  
+   
   <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false&libraries=places"></script>  
   
   <script type="text/javascript" src="https://jqueryjs.googlecode.com/svn-history/r6305/trunk/plugins/methods/date.js"></script>
-  
-  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-  
-  <script type="text/javascript" src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>    
 </head>
 
 
@@ -36,29 +32,46 @@
   </footer>  
 </template>
 
-<template name="postLayout">
-  <header role="banner">   
-    
-  <div class="btn-group">
-    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-      Action <span class="caret"></span>
-    </button>
-    <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-      <li><a href="#">Action</a></li>
-      <li><a href="#">Another action</a></li>
-      <li><a href="#">Something else here</a></li>
-      <li class="divider"></li>
-      <li><a href="#">Separated link</a></li>
-    </ul>
-  </div> 
-    
+<template name="noPostLayout">
+    <header role="banner">   
     {{#with currentUser}}
       {{> userprofile}}
       {{> navbar}}
       {{> insertPost}}
     {{/with}}    
   </header>
+  <div class="fill"> 
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-4 col-md-4">             
+          <div id="sidebar">
+            {{#if currentUser}}
+              {{> gmap}}
+            {{/if}}
+          </div>
+        </div> 
+        <div class="col-sm-8 col-md-8">    
+          <div class="row">
+            {{> yield}}
+          </div>
+        </div>
+      </div>       
+    </div> 
+  </div>  
   
+  <footer>
+    {{> footer}}
+  </footer>
+</template>
+
+<template name="postLayout">
+  <header role="banner">   
+    {{#with currentUser}}
+      {{> userprofile}}
+      {{> navbar}}
+      {{> insertPost}}
+    {{/with}}    
+  </header>
   <div class="fill"> 
     <div class="container">
       <div class="row">

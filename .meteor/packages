@@ -15,6 +15,6 @@ cfs-s3
 cfs-filesystem
 cfs-graphicsmagick
 less
-bootstrap3-less
 ui-dropped-event
 iron-router-progress
+bootstrap3-less

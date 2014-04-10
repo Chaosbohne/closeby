@@ -13,6 +13,14 @@ Router.map(function() {
 });
 
 Router.map(function() {
+  this.route('settings', {
+    path: '/settings',
+    
+    layoutTemplate: 'postLayout'
+  });
+});
+
+Router.map(function() {
   this.route('userposts', {
     path: '/:_id/:postsLimit?',
     

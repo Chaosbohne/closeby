@@ -1,10 +1,17 @@
 Template.navbar.rendered = function() {
-  
   $('#nav-wrapper').affix({
     offset: {
       top: $('header').height()
     }    
   });
-  
-  //$('.dropdown-toggle').dropdown();
 }
+
+Template.navbar.events({
+  'click .settings': function() {
+    Router.go('settings');
+  },
+  
+  'click .logout': function() {
+    Meteor.logout();
+  }
+});
