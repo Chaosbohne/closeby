@@ -12,6 +12,7 @@ PostsListController = RouteController.extend({
   
   waitOn: function() {
     var user = Meteor.user();
+    
     if(user) {     
       if(this.isFirstRun) {
         return [Meteor.subscribe('posts', user.profile.locs[0].lat, user.profile.locs[0].lng, user.profile.locs[1].lat, user.profile.locs[1].lng, this.findOptions()),
@@ -37,7 +38,7 @@ PostsListController = RouteController.extend({
     };
   },
   
-  onBeforeAction: function() {
+  onBeforeAction: function() {    
     if (this.data()) {
       // we can then extract the userIds of the authors
       var imageIds = this.data().posts.map(function(p) { return p.imageId });

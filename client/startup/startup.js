@@ -38,4 +38,27 @@ Meteor.startup(function() {
     this.markers = new Array();
   };
   
+  var gmapStyles = [
+    {
+      featureType: "poi",
+      elementType: "labels",
+      stylers: [
+        { visibility: "off" }
+      ]
+    }
+  ];  
+  
+  gmapOptions = {
+    zoom: 8,
+    panControl: false,
+    zoomControl: false,
+    scaleControl: false,
+    mapTypeControl: false,
+    streetViewControl: false,
+    overviewMapControl: false,
+    mapTypeId: google.maps.MapTypeId.ROADMAP,
+    styles: gmapStyles
+  };
+  
+  
 });

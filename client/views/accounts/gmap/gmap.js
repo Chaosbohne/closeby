@@ -1,54 +1,45 @@
 Template.gmap.rendered = function() {
-  
-  $('#sidebar').affix({
-    offset: {
-      top: $('header').height(),
-      bottom: $('footer').height()
-    }
-  });    
-  
-  var sw = new google.maps.LatLng(-34.89410255169253, 150.039751953125);
-  var ne = new google.maps.LatLng(-33.89692705065752, 151.248248046875);
-  
-  var bounds; 
+  google.maps.event.addDomListener(window, "resize", function() {
+    console.log('resize');
+    var center = map.getCenter();
+    google.maps.event.trigger(map, "resize");
+    map.setCenter(center); 
+  });     
+}
+
+
+Template.gmap.destroyed = function() {
+  google.maps.event.clearListeners(map, "resize");  
+}
+
+/*
+Template.gmap.rendered = function() {
+
+  var sw = this.data.sw;
+  var ne = this.data.ne;
   
   var user = Meteor.user();
-  
-  if(user) {
-    sw = new google.maps.LatLng(user.profile.locs[0].lat, user.profile.locs[0].lng);
-    ne = new google.maps.LatLng(user.profile.locs[1].lat, user.profile.locs[1].lng);  
+  if(user && this.data) {  
+    //if(this.data) {
+    console.log(this.data);
+    if(this.data.functional_range === 'posts') {
+      sw = new google.maps.LatLng(user.profile.locs[0].lat, user.profile.locs[0].lng);
+      ne = new google.maps.LatLng(user.profile.locs[1].lat, user.profile.locs[1].lng); 
+    }
+    //}
+  }else {
+    
   }
 
-  bounds = new google.maps.LatLngBounds(sw, ne);
+  var bounds = new google.maps.LatLngBounds(sw, ne);
   
-  var myStyles =[
-    {
-      featureType: "poi",
-      elementType: "labels",
-      stylers: [
-        { visibility: "off" }
-      ]
-    }
-  ];  
-  
-  var mapOptions = {
-    zoom: 8,
-    panControl: false,
-    zoomControl: false,
-    scaleControl: false,
-    mapTypeControl: false,
-    streetViewControl: false,
-    overviewMapControl: false,
-    mapTypeId: google.maps.MapTypeId.ROADMAP,
-    styles: myStyles
-  };
 
   map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);   
   
   map.fitBounds(bounds);
-  
-  function setDiscoverLocs() {
-    if(map) {
+    
+  if(this.data.functional_range === 'posts') {
+    function setDiscoverLocs() {
       var sw = map.getBounds().getSouthWest();
       var ne = map.getBounds().getNorthEast();
       
@@ -56,23 +47,33 @@ Template.gmap.rendered = function() {
         {lng : sw.lng(), lat : sw.lat()},
         {lng : ne.lng(), lat : ne.lat()}
       ]};    
+
+      Meteor.call('setDiscoverLocs', discoverLocs);      
+    }  
+    
+    function openCreatePostModal(event) {
+      var latLng = event.latLng;
       
-      Meteor.call('setDiscoverLocs', discoverLocs);
-    }
-  }  
-  
-  function openCreatePostModal(event) {
-    var latLng = event.latLng;
+      Session.set('mapClickedEvent', {locs : {lat : latLng.lat(), lng : latLng.lng()}});
+      
+      $('#createPostModal').modal('show');
+    }  
     
-    Session.set('mapClickedEvent', {locs : {lat : latLng.lat(), lng : latLng.lng()}});
+    $('#sidebar').affix({
+      offset: {
+        top: $('header').height(),
+        bottom: $('footer').height()
+      }
+    });      
     
-    $('#createPostModal').modal('show');
-  }
-  
-  if(user) {
     google.maps.event.addListener(map, "idle", setDiscoverLocs);     
-    google.maps.event.addListener(map, "click", openCreatePostModal);   
+    google.maps.event.addListener(map, "click", openCreatePostModal); 
   }
+  //if(user) {
+  //  google.maps.event.addListener(map, "idle", setDiscoverLocs);     
+  //  google.maps.event.addListener(map, "click", openCreatePostModal);   
+  //}
+  
   //    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
   //var input = (document.getElementById('pac-input'));
   //map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
@@ -88,3 +89,15 @@ Template.gmap.rendered = function() {
   // :)    
   //}
 };
+
+Template.gmap.destroyed = function() {
+  google.maps.event.clearListeners(map, "idle");
+  google.maps.event.clearListeners(map, "click");
+  
+  $(window).off('.affix');
+  $("#sidebar")
+      .removeClass("affix affix-top affix-bottom")
+      .removeData("bs.affix");  
+};
+
+*/

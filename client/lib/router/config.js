@@ -8,7 +8,9 @@ Router.onBeforeAction(beforeHooks.isLoggedIn, {except: ['landingPage']});
 
 Router.map(function() {
   this.route('landingPage', {
-    path: '/login'
+    path: '/login',
+    
+    controller: LandingPageController
   });
 });
 
@@ -26,7 +28,11 @@ Router.map(function() {
     
     layoutTemplate: 'postLayout',
     
-    controller: UserPostsListController
+    controller: UserPostsListController,
+    
+    yieldTemplates: {
+      'gmapPosts': {to: 'gmapPosts'}
+    }      
   });
 });
 
@@ -36,6 +42,10 @@ Router.map(function() {
     
     layoutTemplate: 'postLayout',
     
-    controller: PostsListController
+    controller: PostsListController,
+    
+    yieldTemplates: {
+      'gmapPosts': {to: 'gmapPosts'}
+    }    
   });
 });
