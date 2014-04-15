@@ -1,20 +1,19 @@
 Template.gmapPosts.rendered = function() {
   
-  var sw, ne;
+  var center, zoomLevel;
   var canvas = this.find('#map-canvas');  
   
   var user = Meteor.user();
   if(user) {  
-    sw = new google.maps.LatLng(user.profile.locs[0].lat, user.profile.locs[0].lng);
-    ne = new google.maps.LatLng(user.profile.locs[1].lat, user.profile.locs[1].lng); 
+    center = new google.maps.LatLng(user.profile.centerLocs.lat, user.profile.centerLocs.lng);
+    zoomLevel = user.profile.zoomLevel;
   }
-  
-  
-  var bounds = new google.maps.LatLngBounds(sw, ne);
-  
+
   map = new google.maps.Map(canvas, gmapOptions);   
-                            
-  map.fitBounds(bounds);
+
+  map.setZoom(zoomLevel);
+  map.setCenter(center);
+  
   
   if(user) {
     function setDiscoverLocs() {

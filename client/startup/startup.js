@@ -50,6 +50,8 @@ Meteor.startup(function() {
   
   gmapOptions = {
     zoom: 8,
+    maxZoom: 20,
+    minZoom: 2,
     panControl: false,
     zoomControl: false,
     scaleControl: false,
@@ -60,5 +62,5 @@ Meteor.startup(function() {
     styles: gmapStyles
   };
   
-  
+  Session.set('hasSubscriptionBoundChanged', false);
 });

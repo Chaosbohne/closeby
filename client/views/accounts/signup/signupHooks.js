@@ -1,7 +1,7 @@
 AutoForm.hooks({
   signupForm: {
     onSubmit: function (insertDoc, updateDoc, currentDoc) {
-    
+          
       var sw = map.getBounds().getSouthWest();
       var ne = map.getBounds().getNorthEast();
       
@@ -10,7 +10,15 @@ AutoForm.hooks({
         {lng : ne.lng(), lat : ne.lat()}
       ]};
       
+      var centerLocs = {'centerLocs': { lng: map.getCenter().lng(),  lat : map.getCenter().lat() }};
+      
+      var zoomLevel = {'zoomLevel' : map.getZoom()};
+      
+      
       _.extend(insertDoc, locs);
+      _.extend(insertDoc, centerLocs);
+      _.extend(insertDoc, zoomLevel);
+      
       
       Accounts.createUser(insertDoc, function(error){
         console.log(insertDoc);

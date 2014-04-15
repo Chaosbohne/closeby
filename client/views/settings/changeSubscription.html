@@ -1,3 +1,10 @@
 <template name="changeSubscription">
   {{> gmapSettings}}       
+  <h3>Move the map to the new place you would like to have as default</h3>
+  {{#if hasSubscriptionBoundChanged}}
+    <button type="button" class="btn btn-lg btn-primary">Save</button>  
+  {{else}}
+    <button type="button" class="btn btn-lg btn-primary" disabled="disabled">Save</button>  
+  {{/if}}
+  
 </template>
