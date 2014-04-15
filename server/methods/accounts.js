@@ -36,12 +36,19 @@ Meteor.methods({
     return user;
   },
   
-  setLocs: function(locs) {
-    check(locs, UpdateLocsSchema);
+  setMapData: function(mapData) {
+    check(mapData, MapDataSchema);
     
     var user = Meteor.user();
     
-    Meteor.users.update( {_id:Meteor.user()._id}, {$set: {"profile.locs" : locs.locs}});
+    Meteor.users.update( {_id:Meteor.user()._id},
+                        {$set: 
+                         {
+                           "profile.locs" : mapData.locs,
+                           "profile.centerLocs": mapData.centerLocs,
+                           "profile.zoomLevel": mapData.zoomLevel
+                         }
+                        });
     
     return user;    
   }

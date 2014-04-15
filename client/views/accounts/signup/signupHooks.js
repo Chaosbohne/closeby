@@ -14,11 +14,7 @@ AutoForm.hooks({
       
       var zoomLevel = {'zoomLevel' : map.getZoom()};
       
-      
-      _.extend(insertDoc, locs);
-      _.extend(insertDoc, centerLocs);
-      _.extend(insertDoc, zoomLevel);
-      
+      _.extend(insertDoc, locs, centerLocs, zoomLevel);      
       
       Accounts.createUser(insertDoc, function(error){
         console.log(insertDoc);

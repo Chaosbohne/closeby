@@ -6,21 +6,20 @@ Template.changeSubscription.helpers({
 
 Template.changeSubscription.rendered = function() {
   $("a[href='#subscription']").on('shown.bs.tab', function(){
-    var sw, ne;
+    
+    var center, zoomLevel; 
     
     var user = Meteor.user();
     if(user) {  
-      sw = new google.maps.LatLng(user.profile.locs[0].lat, user.profile.locs[0].lng);
-      ne = new google.maps.LatLng(user.profile.locs[1].lat, user.profile.locs[1].lng); 
+      center = new google.maps.LatLng(user.profile.centerLocs.lat, user.profile.centerLocs.lng);
+      zoomLevel = user.profile.zoomLevel;
     }
-
-    var bounds = new google.maps.LatLngBounds(sw, ne);
     
     map = new google.maps.Map(document.getElementById("map-canvas"), gmapOptions);   
-                          
-    map.fitBounds(bounds);
     
-
+    map.setZoom(zoomLevel);
+    map.setCenter(center);
+    
     
     function mapLoaded() {
       function newBounds() {
@@ -45,19 +44,26 @@ Template.changeSubscription.destroyed = function() {
 
 Template.changeSubscription.events({
   'click button': function(event) {
-      var sw = map.getBounds().getSouthWest();
-      var ne = map.getBounds().getNorthEast();
-      
-      var locs = {'locs': [
-        {lng : sw.lng(), lat : sw.lat()},
-        {lng : ne.lng(), lat : ne.lat()}
-      ]};    
-      
-    console.log(locs);
+    var sw = map.getBounds().getSouthWest();
+    var ne = map.getBounds().getNorthEast();
     
-    Meteor.call('setLocs', locs, function(error, result) {
+    var locs = {'locs': [
+      {lng : sw.lng(), lat : sw.lat()},
+      {lng : ne.lng(), lat : ne.lat()}
+    ]};    
+    
+    
+    var centerLocs = {'centerLocs': { lng: map.getCenter().lng(),  lat : map.getCenter().lat() }};
+    
+    var zoomLevel = {'zoomLevel' : map.getZoom()};
+    
+    _.extend(locs, centerLocs, zoomLevel);
+    
+    Meteor.call('setMapData', locs, function(error, result) {
       if(!error)
         Session.set('hasSubscriptionBoundChanged', false);
+      else 
+        console.log(error);
     });         
   }
 });
