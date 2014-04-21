@@ -1,0 +1,20 @@
+<template name="changeProfileImage"> 
+  <div id="changeProfileImage">
+    {{#with hasImageValidationError}}
+      {{> error}}
+    {{/with}}
+    
+    <div id="dropzone" class="dropzone col-sm-4">
+      <div class="media media-big">
+        <a class="pull-left" href="#">
+          <img class="media-object img-responsive" src="/img/profile_picture.jpg" alt="profileimage">
+        </a>
+      </div>
+    </div>  
+    
+    <button class="btn btn-default btn-info pull-left btn-file">
+      Add Image<input id="addImage" accept="image/*" type="file">
+    </button>           
+    
+  </div>
+</template>

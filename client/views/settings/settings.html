@@ -43,21 +43,8 @@
         </form>
       </div>
       <div class="tab-pane" id="profile">
-        <form>
-          <div class="form-group">
-            <label for="inputLocs" class="col-sm-2 control-label">Profileimage</label>
-            <div class="col-sm-4">
-              <div class="media media-big">
-                <a class="pull-left" href="#">
-                  <img class="media-object img-responsive" src="/img/profile_picture.jpg" alt="profileimage">
-                </a>
-              </div>
-            </div>
-            <div class="col-sm-2">
-              <p class="form-control-static">Change</p>
-            </div>        
-          </div>               
-        </form>        
+        {{> changeProfileImage}}  
+        {{> changeProfileImageModal}}
       </div>
       <div class="tab-pane" id="subscription">
         {{> changeSubscription}}

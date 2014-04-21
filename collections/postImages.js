@@ -6,18 +6,6 @@ var postImagesStore = new FS.Store.S3("postImages", {
   maxTries: 1, //optional, default 5
   transformWrite: function(fileObj, readStream, writeStream) {
     gm(readStream, fileObj.name).strip().resize('1024').interlace("plane").blur('0.05').quality('80').stream().pipe(writeStream);
-    
-    /*
-    if (typeof fileObj.name === "string") {
-      console.log(fileObj.name.split(".")[0]);
-      fileObj.name =  fileObj.name.split(".")[0] + ".jpeg";
-      fileObj.type = "image/jpeg";
-      
-      //console.log(path.basename(fileObj.name, path.extname(fileObj.name)));
-      //fileObj.name = path.basename(fileObj.name, path.extname(fileObj.name)) + ".jpeg";
-      //fileObj.type = "image/jpeg";
-    } 
-    */
   }
 });
 

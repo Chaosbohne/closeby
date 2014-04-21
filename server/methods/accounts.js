@@ -27,21 +27,27 @@ Accounts.onCreateUser(function(options, user) {
 
 Meteor.methods({
   setDiscoverLocs: function(discoverLocs) {
-    check(discoverLocs, UpdateDiscoverLocsSchema);
     
     var user = Meteor.user();
+    if (!user)
+      throw new Meteor.Error(401, "You need to login to do any changes");        
     
-    Meteor.users.update( {_id:Meteor.user()._id}, {$set: {"profile.discoverLocs" : discoverLocs.discoverLocs}});
+    check(discoverLocs, UpdateDiscoverLocsSchema);
+    
+    Meteor.users.update( {_id: user._id}, {$set: {"profile.discoverLocs" : discoverLocs.discoverLocs}});
     
     return user;
   },
   
   setMapData: function(mapData) {
-    check(mapData, MapDataSchema);
     
     var user = Meteor.user();
+    if (!user)
+      throw new Meteor.Error(401, "You need to login to do any changes");    
     
-    Meteor.users.update( {_id:Meteor.user()._id},
+    check(mapData, MapDataSchema);
+    
+    Meteor.users.update( {_id: user._id},
                         {$set: 
                          {
                            "profile.locs" : mapData.locs,
@@ -51,6 +57,28 @@ Meteor.methods({
                         });
     
     return user;    
+  },
+  
+  setProfileImage: function(imageId, imageUrl) {
+    
+    var user = Meteor.user();
+    var image = ProfileImages.findOne({ _id : imageId });
+    
+    if (!user)
+      throw new Meteor.Error(401, "You need to login to do any changes");    
+    
+    if(!image)
+      throw new Meteor.Error(401, "ImageId does not exist");    
+    
+    Meteor.users.update( { _id : user._id}, 
+                        {$set:
+                         {
+                           "profile.imageId" : image._id,
+                           "profile.imageUrl" : image.url({store: 'profileImages', auth: false})
+                         }
+                        });
+                       
+    return user;
   }
 });
 

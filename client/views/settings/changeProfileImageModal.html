@@ -1,0 +1,29 @@
+<template name="changeProfileImageModal">
+  <div id="changeProfileImageModal" data-backdrop="static" class="modal fade">
+    <div class="modal-dialog modal-sm">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+          <h4 class="text-center modal-title">Set new profile image</h4>
+        </div>
+        <div class="modal-body ">
+          {{#with hasImageValidationError}}
+            {{> error}}
+          {{/with}}          
+          <div class="row">
+            <div>
+              <img id="imageToCrop" class="img-responsive center-block">
+            </div>
+          </div>
+          <div class="row">
+            <input class="slider" />
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          <button type="button" class="save btn btn-primary">Save changes</button>
+        </div>              
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->  
+</template>

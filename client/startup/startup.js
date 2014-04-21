@@ -61,6 +61,17 @@ Meteor.startup(function() {
     mapTypeId: google.maps.MapTypeId.ROADMAP,
     styles: gmapStyles
   };
+
+  map = null;
+  
   
   Session.set('hasSubscriptionBoundChanged', false);
+  
+  
+  
+  
+  
+  var error = {hasError: false, reason: ''};
+  Session.setDefault('profileImageError', error);  
+  Session.setDefault('profileImageModalError', error);  
 });
